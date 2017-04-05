@@ -21,8 +21,16 @@ public class UserService {
         return myUserRepository.findOne(id);
     }
 
-    public User createUser(User user){
-        return myUserRepository.save(user);
+    public void createUser(User user){
+        myUserRepository.save(user);
+    }
+
+    public void updateUser(User user){
+        myUserRepository.save(user);
+    }
+
+    public void deleteUser(int id){
+          myUserRepository.delete(id);
     }
 
 
