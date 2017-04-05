@@ -27,7 +27,7 @@ public class BookController {
 	}
 	
 	@RequestMapping(value="/books", method = RequestMethod.POST)
-	public void createTopic(@RequestBody Book book){
+	public void createBook(@RequestBody Book book){
 		myBookService.addBook(book);
 	}
 	
