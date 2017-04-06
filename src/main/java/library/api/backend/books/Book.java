@@ -5,13 +5,19 @@ import javax.persistence.*;
 import library.api.backend.loans.Loan;
 
 import library.api.backend.returns.LoanReturn;
+
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
+
 
 
 @Entity
-public class Book {
-	
+//@Table(name="books")
+public class Book implements Serializable {
+
 	@Id
+	@GeneratedValue
 	int id;
 	
 	String isbn;
@@ -20,11 +26,11 @@ public class Book {
 	String publisher;
 	String publishDate;
 
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "loan",fetch = FetchType.EAGER)
-	private List<Loan> loan;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	private Set<Loan> loans;
 
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "loan",fetch = FetchType.EAGER)
-	private List<LoanReturn> loanReturn;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	private Set<LoanReturn> loanReturns;
 	
 	
 	public Book() {
@@ -102,19 +108,5 @@ public class Book {
 		this.publishDate = publishDate;
 	}
 
-	public List<Loan> getLoan() {
-		return loan;
-	}
 
-	public void setLoan(List<Loan> loan) {
-		this.loan = loan;
-	}
-
-	public List<LoanReturn> getLoanReturn() {
-		return loanReturn;
-	}
-
-	public void setLoanReturn(List<LoanReturn> loanReturn) {
-		this.loanReturn = loanReturn;
-	}
 }

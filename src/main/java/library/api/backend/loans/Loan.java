@@ -12,23 +12,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.*;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 
 @Entity
-@Table(name="book_loan")
-public class Loan {
+//@Table(name="book_loan")
+public class Loan implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User userId;
+    @ManyToOne(optional = false)
+    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @ManyToOne(optional = false)
     private Book book;
 
 
@@ -41,9 +40,9 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(User userId, Book bookId, Date dateOfReturn, Date dateOfIssue) {
-        this.userId = userId;
-        this.book = bookId;
+    public Loan(User user, Book book, Date dateOfReturn, Date dateOfIssue) {
+        this.user = user;
+        this.book = book;
         this.dateOfReturn = dateOfReturn;
         this.dateOfIssue = dateOfIssue;
     }
@@ -56,20 +55,20 @@ public class Loan {
         this.id = id;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Book getBookId() {
+    public Book getBook() {
         return book;
     }
 
-    public void setBookId(Book bookId) {
-        this.book = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public Date getDateOfReturn() {

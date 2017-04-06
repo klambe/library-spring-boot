@@ -6,13 +6,15 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.io.Serializable;
+
 
 @Entity
-@Table(name="book_return")
-public class LoanReturn {
+//@Table(name="book_return")
+public class LoanReturn implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     int id;
 
 
@@ -22,23 +24,21 @@ public class LoanReturn {
     @CreationTimestamp
     private Date dateOfIssue;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(optional = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @ManyToOne(optional = false)
     private Book book;
 
 
     public LoanReturn() {
     }
 
-    public LoanReturn(int id,  Date dateOfReturn, Date dateOfIssue) {
-        this.id = id;
-
+    public LoanReturn(Date dateOfReturn, Date dateOfIssue, User user, Book book) {
         this.dateOfReturn = dateOfReturn;
         this.dateOfIssue = dateOfIssue;
+        this.user = user;
+        this.book = book;
     }
 
     public int getId() {
@@ -47,22 +47,6 @@ public class LoanReturn {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
     }
 
     public Date getDateOfReturn() {
@@ -79,5 +63,21 @@ public class LoanReturn {
 
     public void setDateOfIssue(Date dateOfIssue) {
         this.dateOfIssue = dateOfIssue;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 }

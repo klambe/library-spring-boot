@@ -6,13 +6,16 @@ import java.util.Set;
 
 import library.api.backend.loans.Loan;
 import library.api.backend.returns.LoanReturn;
+import java.io.Serializable;
+
 
 
 @Entity
-@Table(name="users")
-public class User {
+//@Table(name="users")
+public class User implements Serializable{
 
     @Id
+    @GeneratedValue
     int id;
 
     String username;
@@ -21,11 +24,11 @@ public class User {
     String role;
 
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "loan",fetch = FetchType.EAGER)
-    private List<Loan> loan;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Loan> loans;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "loan",fetch = FetchType.EAGER)
-    private List<LoanReturn> loanReturn;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<LoanReturn> loanReturns;
 
 
     public User() {
@@ -79,19 +82,5 @@ public class User {
         this.role = role;
     }
 
-    public List<Loan> getLoan() {
-        return loan;
-    }
 
-    public void setLoan(List<Loan> loan) {
-        this.loan = loan;
-    }
-
-    public List<LoanReturn> getLoanReturn() {
-        return loanReturn;
-    }
-
-    public void setLoanReturn(List<LoanReturn> loanReturn) {
-        this.loanReturn = loanReturn;
-    }
 }
