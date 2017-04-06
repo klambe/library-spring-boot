@@ -3,6 +3,11 @@ package library.api.backend.users;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
+import java.util.Set;
+
+import library.api.backend.loans.Loan;
 
 
 @Entity
@@ -16,6 +21,9 @@ public class User {
     String password;
     String email;
     String role;
+
+    @OneToMany(mappedBy = "userId",cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Loan> linkedAccounts;
 
     public User() {
     }

@@ -1,33 +1,21 @@
-package library.api.backend.loans;
+package library.api.backend.returns;
 
-import library.api.backend.books.Book;
-import library.api.backend.users.User;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
-
-
+import javax.persistence.*;
 import java.util.Date;
 
-
 @Entity
-@Table(name="book_loan")
-public class Loan {
+@Table(name="book_return")
+public class LoanReturn {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    int id;
 
-    @ManyToOne
-    private User userId;
+    int userId;
 
-    @ManyToOne
-    private Book bookId;
+    int bookId;
 
 
     @CreationTimestamp
@@ -36,10 +24,11 @@ public class Loan {
     @CreationTimestamp
     private Date dateOfIssue;
 
-    public Loan() {
+    public LoanReturn() {
     }
 
-    public Loan(User userId, Book bookId, Date dateOfReturn, Date dateOfIssue) {
+    public LoanReturn(int id, int userId, int bookId, Date dateOfReturn, Date dateOfIssue) {
+        this.id = id;
         this.userId = userId;
         this.bookId = bookId;
         this.dateOfReturn = dateOfReturn;
@@ -54,19 +43,19 @@ public class Loan {
         this.id = id;
     }
 
-    public User getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public Book getBookId() {
+    public int getBookId() {
         return bookId;
     }
 
-    public void setBookId(Book bookId) {
+    public void setBookId(int bookId) {
         this.bookId = bookId;
     }
 
