@@ -1,13 +1,11 @@
 package library.api.backend.users;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 import library.api.backend.loans.Loan;
+import library.api.backend.returns.LoanReturn;
 
 
 @Entity
@@ -22,8 +20,13 @@ public class User {
     String email;
     String role;
 
-    @OneToMany(mappedBy = "userId",cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Loan> linkedAccounts;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "loan",fetch = FetchType.EAGER)
+    private List<Loan> loan;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "loan",fetch = FetchType.EAGER)
+    private List<LoanReturn> loanReturn;
+
 
     public User() {
     }
@@ -74,5 +77,21 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Loan> getLoan() {
+        return loan;
+    }
+
+    public void setLoan(List<Loan> loan) {
+        this.loan = loan;
+    }
+
+    public List<LoanReturn> getLoanReturn() {
+        return loanReturn;
+    }
+
+    public void setLoanReturn(List<LoanReturn> loanReturn) {
+        this.loanReturn = loanReturn;
     }
 }

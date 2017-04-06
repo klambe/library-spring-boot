@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 
 import java.util.Date;
@@ -23,11 +23,13 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User userId;
 
-    @ManyToOne
-    private Book bookId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
 
     @CreationTimestamp
@@ -41,7 +43,7 @@ public class Loan {
 
     public Loan(User userId, Book bookId, Date dateOfReturn, Date dateOfIssue) {
         this.userId = userId;
-        this.bookId = bookId;
+        this.book = bookId;
         this.dateOfReturn = dateOfReturn;
         this.dateOfIssue = dateOfIssue;
     }
@@ -63,11 +65,11 @@ public class Loan {
     }
 
     public Book getBookId() {
-        return bookId;
+        return book;
     }
 
     public void setBookId(Book bookId) {
-        this.bookId = bookId;
+        this.book = bookId;
     }
 
     public Date getDateOfReturn() {

@@ -1,5 +1,7 @@
 package library.api.backend.returns;
 
+import library.api.backend.books.Book;
+import library.api.backend.users.User;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -13,10 +15,6 @@ public class LoanReturn {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
-    int userId;
-
-    int bookId;
-
 
     @CreationTimestamp
     private Date dateOfReturn;
@@ -24,13 +22,21 @@ public class LoanReturn {
     @CreationTimestamp
     private Date dateOfIssue;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
+
+
     public LoanReturn() {
     }
 
-    public LoanReturn(int id, int userId, int bookId, Date dateOfReturn, Date dateOfIssue) {
+    public LoanReturn(int id,  Date dateOfReturn, Date dateOfIssue) {
         this.id = id;
-        this.userId = userId;
-        this.bookId = bookId;
+
         this.dateOfReturn = dateOfReturn;
         this.dateOfIssue = dateOfIssue;
     }
@@ -43,20 +49,20 @@ public class LoanReturn {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getBookId() {
-        return bookId;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public Date getDateOfReturn() {
